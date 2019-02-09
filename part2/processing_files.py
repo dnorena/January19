@@ -29,13 +29,18 @@ def writingresults(sourcepath, destinationpath, sortedlist):
                 wfd.write('\n')
 
 def readingfolder(sourcepath, destinationpath): 
+    #validate existance of source path
+    if not os.path.isdir(sourcepath):
+        print("Source folder doesn't exist, please verify")
+        sys.exit(1)
+
     names = [name for name in os.listdir(sourcepath)]
-    print(names)
     mylist = []
     for workfile in names: 
         #validate file name to proces
-        if re.match(r'\hwFile\d+\.log',workfile ):          
-            with open(sourcepath+"/"+workfile, 'rb') as f:
+        if re.match(r'\hwFile\d+\.log',workfile ):   
+            filename =sourcepath+"/"+workfile        
+            with open(filename, 'rb') as f:
                 for line in f:
                     # grab ip address and date in brackets
                     ipaddress = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', line).group()
@@ -47,7 +52,11 @@ def readingfolder(sourcepath, destinationpath):
 
     sortedlist = sorted(mylist, key=operator.itemgetter(1, 2))
     ##now process the list in one file
-    writingresults(sourcepath, destinationpath, sortedlist)
+    if len(sortedlist) > 0:
+        writingresults(sourcepath, destinationpath, sortedlist)
+    else:
+        print("There are no files to process with expected pattern name, in folder " + sourcepath)
+        sys.exit(0)
 
 # validate must have 2 arguments
 if len(sys.argv)  != 3:
@@ -63,7 +72,14 @@ destinationpath=sys.argv[2]
 
 try:
     readingfolder(sourcepath, destinationpath)
+    print("******Done, check results in this folder: " + destinationpath)
+    files = os.listdir(destinationpath)
+    for name in files:
+        print("\n Output File: " + name )
+        print(" Size: " + str(os.path.getsize(destinationpath)))
+        print(" Location: " + destinationpath + "\hwOutputFile.log")
     sys.exit(0)
+
 except KeyError:
     pass
 

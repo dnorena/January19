@@ -25,12 +25,11 @@ apt-get update
 apt-get install -y apache2 git curl php7.2 php7.2-bcmath php7.2-bz2 php7.2-cli php7.2-curl php7.2-intl php7.2-json php7.2-mbstring php7.2-opcache php7.2-soap php7.2-sqlite3 php7.2-xml php7.2-xsl php7.2-zip libapache2-mod-php7.2
 
 # Create necessary folders, files and permissions
-mkdir -p ${TEMP_DIR} ${RESULTS_FOLDER} ${PRJ_FOLDER}
+mkdir -p ${TEMP_DIR} ${RESULTS_FOLDER}
 chmod 1777 ${TEMP_DIR} ${RESULTS_FOLDER}
 touch ${LOG_FILE}
 chown www-data:www-data ${LOG_FILE} ${RESULTS_FOLDER}
 chmod 664 ${LOG_FILE}
-ln -s ${LOG_FILE} php_showtime_error.log
 
 # Change phpini sys_temp_dir and error_log
 sed -i.bak "/sys_temp_dir.*/c\sys_temp_dir=${TEMP_DIR}" /etc/php/7.2/apache2/php.ini
@@ -48,11 +47,14 @@ echo "<?php
 mv /home/vagrant/IndexST.html /var/www/html/
 
 # clone git repo dnorena for all the files
-cd ${PRJ_FOLDER}
-git clone https://github.com/dnorena/sampleprj .
-cp part1/test*.php /var/www/html/
-
-# cp files to html folder (for php testing)
+cd /opt
+if [ ! -d "$PRJ_FOLDER" ]; then
+    git clone https://github.com/dnorena/sampleprj ${PRJ_FOLDER}
+    chown -R vagrant:vagrant ${PRJ_FOLDER}
+    chmod 750 ${PRJ_FOLDER}
+    cd ${PRJ_FOLDER}
+    cp part1/test*.php /var/www/html/
+fi
 
 # Configure Apache
 echo "<VirtualHost *:80>
@@ -82,5 +84,5 @@ else
 fi
 
 # Reset home directory of vagrant user
-echo "** PHP Environment Visit http://localhost:5051 or http://phpdevbox.test.com in your browser for to view the application **"
+echo "** PHP Environment Visit http://localhost:1234 or http://phpdevbox.test.com in your browser for to view the application **"
 echo " done"
