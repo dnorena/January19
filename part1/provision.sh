@@ -17,19 +17,20 @@ APACHE_LOG_DIR="/var/log/apache2"
 TEMP_DIR="/tmp/php/showtime"
 LOG_FILE="/var/log/php_showtime_error.log"
 RESULTS_FOLDER="/var/www/html/results"
-
-# Create necessary folders, files and permissions
-mkdir -p ${TEMP_DIR} ${RESULTS_FOLDER}
-chmod 1777 ${TEMP_DIR} ${RESULTS_FOLDER}
-touch ${LOG_FILE}
-chown www-data:www-data ${LOG_FILE} ${RESULTS_FOLDER}
-chmod 664 ${LOG_FILE}
-ln -s ${LOG_FILE} php_showtime_error.log
+PRJ_FOLDER="/opt/STProject"
 
 # Install packages
 add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get install -y apache2 git curl php7.2 php7.2-bcmath php7.2-bz2 php7.2-cli php7.2-curl php7.2-intl php7.2-json php7.2-mbstring php7.2-opcache php7.2-soap php7.2-sqlite3 php7.2-xml php7.2-xsl php7.2-zip libapache2-mod-php7.2
+
+# Create necessary folders, files and permissions
+mkdir -p ${TEMP_DIR} ${RESULTS_FOLDER} ${PRJ_FOLDER}
+chmod 1777 ${TEMP_DIR} ${RESULTS_FOLDER}
+touch ${LOG_FILE}
+chown www-data:www-data ${LOG_FILE} ${RESULTS_FOLDER}
+chmod 664 ${LOG_FILE}
+ln -s ${LOG_FILE} php_showtime_error.log
 
 # Change phpini sys_temp_dir and error_log
 sed -i.bak "/sys_temp_dir.*/c\sys_temp_dir=${TEMP_DIR}" /etc/php/7.2/apache2/php.ini
@@ -43,22 +44,15 @@ echo "<?php
         phpinfo();
 ?>" > /var/www/html/phpinfo.php
 
-git clone 
-# Build testerror page 
-# echo "<?php
-#         // Script opens unexisting file so it generates an error.
-#         $file=fopen("nonexistent.txt","r");
-# ?>" > /var/www/html/testerror.php
-
-# # Function to see test folder
-# echo "<?php 
-#     // Generate a random temp file in sys_temp_folder
-#     $temp_file = tempnam(sys_get_temp_dir(), 'Testtempfile');
-#     echo $temp_file;
-# ?>" > /var/www/html/testtempfolder.php
-
-# mv html index file 
+# Update html index file 
 mv /home/vagrant/IndexST.html /var/www/html/
+
+# clone git repo dnorena for all the files
+cd ${PRJ_FOLDER}
+git clone https://github.com/dnorena/sampleprj .
+cp part1/test*.php /var/www/html/
+
+# cp files to html folder (for php testing)
 
 # Configure Apache
 echo "<VirtualHost *:80>
