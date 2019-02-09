@@ -1,4 +1,5 @@
-import operator, os, re, shutil
+#!/usr/bin/env python
+import operator, os, re, shutil, sys
 
 '''
 Function receives the path to a folder and the folder contains 64 files with the 
@@ -27,7 +28,7 @@ def writingresults(sourcepath, destinationpath, sortedlist):
                     #chunks of 10MB
                 wfd.write('\n')
 
- def readingfolder(sourcepath, destinationpath): 
+def readingfolder(sourcepath, destinationpath): 
     names = [name for name in os.listdir(sourcepath)]
     print(names)
     mylist = []
@@ -48,7 +49,22 @@ def writingresults(sourcepath, destinationpath, sortedlist):
     ##now process the list in one file
     writingresults(sourcepath, destinationpath, sortedlist)
 
-sourcepath="/home/vagrant/ST"
-destinationpath="/home/vagrant/RESULTS"
-readingfolder(sourcepath, destinationpath)
+# validate must have 2 arguments
+if len(sys.argv)  != 3:
+    print("Reading files sample project by dnorena99@gmail.com")
+    print("usage:   {} SOURCE-FOLDER TARGET-FOLDER".format(sys.argv[0]))
+    print('')
+    print('The 2 commands return the same output:')
+    print('example: {} /opt/STProject /opt/Results'.format(sys.argv[0]))
+    sys.exit(1)
+
+sourcepath=sys.argv[1]
+destinationpath=sys.argv[2]
+
+try:
+    readingfolder(sourcepath, destinationpath)
+    sys.exit(0)
+except KeyError:
+    pass
+
 
