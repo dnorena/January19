@@ -69,6 +69,9 @@ echo "<VirtualHost *:80>
     </Directory>
      <Directory /var/www/html/${RESULTS_FOLDER}>
         Options Indexes FollowSymLinks
+        AllowOverride None
+        Order allow,deny
+        Allow from all
     </Directory>
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
