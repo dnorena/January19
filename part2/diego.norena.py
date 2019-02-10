@@ -26,11 +26,10 @@ def writingresults(sourcepath, destinationpath, sortedlist):
     
     with open(filenam, 'w+') as wfd:
         for item in sortedlist:
-            print(sourcepath + "/" + item[0])
             with open(sourcepath + "/" + item[0],'rb') as fd:
                 shutil.copyfileobj(fd, wfd, 1024*1024*10)
                 #chunks of 10MB
-        wfd.write("\n")
+            wfd.write("\n")
 
 def readingfolder(sourcepath, destinationpath): 
     #validate existance of source path
@@ -48,7 +47,6 @@ def readingfolder(sourcepath, destinationpath):
                 for line in f:
                     # grab ip address and date in brackets
                     ipaddress = re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', line).group()
-                    #print(ipaddress)
                     datetime = re.search(r'\d{1,2}/[ADFJMNOS]\w*/\d{4}:\d{2}:\d{2}:\d{0,2}', line).group()
                     mylist.append((workfile, ipaddress, datetime))
                     break
@@ -78,10 +76,9 @@ try:
     readingfolder(sourcepath, destinationpath)
     print("******Done, check results in this folder: " + destinationpath)
     files = os.listdir(destinationpath)
-    for name in files:
-        print("\n Output File: " + name )
-        print(" Size: " + str(os.path.getsize(destinationpath)))
-        print(" Location: " + destinationpath + "\hwOutputFile.log")
+    print("\n Output File: hwOutputFile.log" )
+    print(" Size: " + str(os.path.getsize(destinationpath)))
+    print(" Location: " + destinationpath + "\hwOutputFile.log")
     sys.exit(0)
 except KeyError:
     pass
