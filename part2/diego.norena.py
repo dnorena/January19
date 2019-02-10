@@ -58,6 +58,7 @@ def readingfolder(sourcepath, destinationpath):
         print("There are no files to process with expected pattern name, in folder " + sourcepath)
         sys.exit(0)
 
+# main process
 # validate must have 2 arguments
 if len(sys.argv)  != 3:
     print("Reading files sample project by dnorena99@gmail.com")
@@ -69,7 +70,6 @@ if len(sys.argv)  != 3:
 
 sourcepath=sys.argv[1]
 destinationpath=sys.argv[2]
-
 try:
     readingfolder(sourcepath, destinationpath)
     print("******Done, check results in this folder: " + destinationpath)
@@ -79,7 +79,6 @@ try:
         print(" Size: " + str(os.path.getsize(destinationpath)))
         print(" Location: " + destinationpath + "\hwOutputFile.log")
     sys.exit(0)
-
 except KeyError:
     pass
 

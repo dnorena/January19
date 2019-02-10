@@ -2,7 +2,7 @@
 
 
 This Vagrant file creates an Ubuntu 16.04 instance with PHP 7.2, and Apache web server, Please refer to provision.sh file for more details.
-The environment is availanble at http://phpdevbox.test.com or http://localhost:1234 for more support with dnorena99@gmail.com
+The local dev environment is available at http://phpdevbox.test.com or http://localhost:1234 for more support with dnorena99@gmail.com
 
 
 <h3>How to Install</h3>
@@ -12,7 +12,7 @@ Pre-Requisites
     Hashicorp-Vagrant Installed in your system.
     Download Git for Windows.
    
-<h3>Running the program, Solution Part 1 (PHP Env.)</h3>
+<h3>Solution Part 1 (PHP Env.)</h3>
 
 - It has been tested with [Vagrant](https://www.vagrantup.com/) 2.0.1 and [VirtualBox](https://www.virtualbox.org/) 5.2.2, but you may use latest versions.
 - Execute windows command prompt as administrator.
@@ -27,14 +27,19 @@ Pre-Requisites
   -  (http://phpdevbox.test.com/) or (http://localhost:1234) or (http://192.168.3.11)
  
 
- <h3>Running the program, Solution Part 2 (Files Processing Script)</h3>
+ <h3>Solution Part 2 (Files Processing Script)</h3>
 
 - Use the same ubuntu box from Part 1. to execute Python script called diego.norena.py.   The script requires two parameters, sourcepath and destination path.  for example:
-  - cd into your working folder sampleprj directory
-  - `vagrant ssh`
+  - Execute windows command prompt as administrator and cd into project folder (sampleprj directory)
+  - `vagrant up` and `vagrant ssh`
   - From command line inside your vagrant ubuntu box. `cd /opt/ProjectST/part2`
-  - Execute the program. `python diego.norena /vagrant results`
-  - The first parameter is the source directory where the files to be processed are located and the second parameter is the target folder to save results.  
+  - Execute the program with two parameters, the first parameter is the source directory where the log files are located and the second parameter is the target directory to save results. For example: `python diego.norena /vagrant results`
+  -  `/vagrant` is the share folder with the host computer, in other words you can copy the files to be processed in that directory inside your computer for this test.
+  - The script program does the following:  
+    - Reads all the files inside the source directory
+    - Reads the first line of each file and sorts by ip address and date/time
+    - Merge all the files inside one big file copying to target folder
+
 
 <h2>Problem Description </h2>
 

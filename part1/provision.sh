@@ -79,6 +79,5 @@ else
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 fi
 
-# Reset home directory of vagrant user
 echo "** PHP Environment Visit http://localhost:1234 or http://phpdevbox.test.com in your browser for to view the application **"
 echo " done"
