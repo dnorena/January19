@@ -19,14 +19,18 @@ def writingresults(sourcepath, destinationpath, sortedlist):
     if not os.path.isdir(destinationpath):
         os.mkdir(destinationpath)
     
-    if os.path.isfile(destinationpath + "/" + destinationfile):
-        with open(destinationpath + "/" + destinationfile, 'w+') as wfd:
-            for item in sortedlist:
-                print(sourcepath + "/" + item[0])
-                with open(sourcepath + "/" + item[0],'rb') as fd:
-                    shutil.copyfileobj(fd, wfd, 1024*1024*10)
-                    #chunks of 10MB
-                wfd.write('\n')
+    filenam = destinationpath + "/" + destinationfile
+    if os.path.isfile(filenam):
+       os.remove(filenam)
+    f=open(filenam, 'w+')
+    
+    with open(filenam, 'w+') as wfd:
+        for item in sortedlist:
+            print(sourcepath + "/" + item[0])
+            with open(sourcepath + "/" + item[0],'rb') as fd:
+                shutil.copyfileobj(fd, wfd, 1024*1024*10)
+                #chunks of 10MB
+        wfd.write("\n")
 
 def readingfolder(sourcepath, destinationpath): 
     #validate existance of source path
@@ -58,7 +62,7 @@ def readingfolder(sourcepath, destinationpath):
         print("There are no files to process with expected pattern name, in folder " + sourcepath)
         sys.exit(0)
 
-# main process
+# main
 # validate must have 2 arguments
 if len(sys.argv)  != 3:
     print("Reading files sample project by dnorena99@gmail.com")
