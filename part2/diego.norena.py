@@ -29,7 +29,7 @@ def writingresults(sourcepath, destinationpath, sortedlist):
             with open(sourcepath + "/" + item[0],'rb') as fd:
                 shutil.copyfileobj(fd, wfd, 1024*1024*10)
                 #chunks of 10MB
-            wfd.write("\n")
+            wfd.write("\r\n")
 
 def readingfolder(sourcepath, destinationpath): 
     #validate existance of source path
