@@ -16,7 +16,6 @@ fi
 APACHE_LOG_DIR="/var/log/apache2"
 TEMP_DIR="/tmp/php/showtime"
 LOG_FILE="/var/log/php_showtime_error.log"
-RESULTS_FOLDER="/var/www/html/results"
 PRJ_FOLDER="/opt/STProject"
 
 # Install packages
@@ -25,10 +24,10 @@ apt-get update
 apt-get install -y apache2 git curl php7.2 php7.2-bcmath php7.2-bz2 php7.2-cli php7.2-curl php7.2-intl php7.2-json php7.2-mbstring php7.2-opcache php7.2-soap php7.2-sqlite3 php7.2-xml php7.2-xsl php7.2-zip libapache2-mod-php7.2
 
 # Create necessary folders, files and permissions
-mkdir -p ${TEMP_DIR} ${RESULTS_FOLDER}
-chmod 1777 ${TEMP_DIR} ${RESULTS_FOLDER}
+mkdir -p ${TEMP_DIR}
+chmod 1777 ${TEMP_DIR}
 touch ${LOG_FILE}
-chown www-data:www-data ${LOG_FILE} ${RESULTS_FOLDER}
+chown www-data:www-data ${LOG_FILE}
 chmod 664 ${LOG_FILE}
 
 # Change phpini sys_temp_dir and error_log
@@ -67,13 +66,7 @@ echo "<VirtualHost *:80>
         Allow from all
         AllowOverride All
     </Directory>
-     <Directory /var/www/html/${RESULTS_FOLDER}>
-        Options Indexes FollowSymLinks
-        AllowOverride None
-        Order allow,deny
-        Allow from all
-    </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/error.log
+     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>" > /etc/apache2/sites-available/000-default.conf
 

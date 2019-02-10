@@ -7,14 +7,12 @@ The environment is availanble at http://phpdevbox.test.com or http://localhost:1
 
 <h3>How to Install</h3>
 Pre-Requisites
-===============
 
     Virtual Box installed in your computer.
     Hashicorp-Vagrant Installed in your system.
     Download Git for Windows.
    
 <h3>Running the program, Solution Part 1 (PHP Env.)</h3>
-===================
 
 - It has been tested with [Vagrant](https://www.vagrantup.com/) 2.0.1 and [VirtualBox](https://www.virtualbox.org/) 5.2.2, but you may use latest versions.
 - Execute windows command prompt as administrator.
@@ -26,11 +24,10 @@ Pre-Requisites
   - `vagrant ssh` # to connect to the system
 
 - The site is available at these locations
-  -  `http://phpdevbox.test.com/` or `http://localhost:1234` or `http://192.168.3.11`
+  -  (http://phpdevbox.test.com/) or (http://localhost:1234) or (http://192.168.3.11)
  
 
  <h3>Running the program, Solution Part 2 (Files Processing Script)</h3>
-===================
 
 - Use the same ubuntu box from Part 1. to execute Python script called diego.norena.py.   The script requires two parameters, sourcepath and destination path.  for example:
   - cd into your working folder sampleprj directory
