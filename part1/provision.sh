@@ -52,6 +52,7 @@ if [ ! -d "$PRJ_FOLDER" ]; then
     chown -R vagrant:vagrant ${PRJ_FOLDER}
     chmod 750 ${PRJ_FOLDER}
     cd ${PRJ_FOLDER}
+    chmod +x part2/diego.norena.py
     cp part1/test*.php /var/www/html/
 fi
 
